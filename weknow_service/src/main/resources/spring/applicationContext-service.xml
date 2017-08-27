@@ -15,4 +15,6 @@
            http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd">
 
 	<bean id="adminsService" class="cn.edu.cqut.weknow.service.impl.AdminsServiceImpl" />
+	<bean id="feedbacksService" class="cn.edu.cqut.weknow.service.impl.FeedbacksServiceImpl" />
+	<bean id="domainsService" class="cn.edu.cqut.weknow.service.impl.DomainsServiceImpl" />
 </beans>           
