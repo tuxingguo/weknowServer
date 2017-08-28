@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50624
 File Encoding         : 65001
 
-Date: 2017-08-23 09:16:46
+Date: 2017-08-28 12:40:04
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -24,12 +24,14 @@ CREATE TABLE `admins` (
   `userName` varchar(50) NOT NULL,
   `userPwd` varchar(128) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of admins
 -- ----------------------------
 INSERT INTO `admins` VALUES ('1', 'admin', '21232F297A57A5A743894A0E4A801FC3');
+INSERT INTO `admins` VALUES ('12', 'admin1', '47BCE5C74F589F4867DBD57E9CA9F808');
+INSERT INTO `admins` VALUES ('13', 'liuhy', '25D55AD283AA400AF464C76D713C07AD');
 
 -- ----------------------------
 -- Table structure for domains
@@ -3576,7 +3578,8 @@ CREATE TABLE `news_contributions` (
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nick` varchar(50) NOT NULL,
+  `email` varchar(64) DEFAULT NULL,
+  `nick` varchar(50) DEFAULT NULL,
   `userName` varchar(64) DEFAULT NULL,
   `phone` varchar(20) DEFAULT NULL,
   `avatarUrl` varchar(255) DEFAULT NULL,

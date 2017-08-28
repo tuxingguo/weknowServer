@@ -17,4 +17,6 @@
 	<bean id="adminsService" class="cn.edu.cqut.weknow.service.impl.AdminsServiceImpl" />
 	<bean id="feedbacksService" class="cn.edu.cqut.weknow.service.impl.FeedbacksServiceImpl" />
 	<bean id="domainsService" class="cn.edu.cqut.weknow.service.impl.DomainsServiceImpl" />
+	<bean id="usersService" class="cn.edu.cqut.weknow.service.impl.UsersServiceImpl" />
+	<bean id="userAuthsService" class="cn.edu.cqut.weknow.service.impl.UserAuthsServiceImpl" />
 </beans>           
