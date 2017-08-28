@@ -14,6 +14,13 @@ import java.util.regex.PatternSyntaxException;
 
 public final class Utils
 {
+    public static final String LOGIN_TYPE_PHONE = "phone";
+    public static final String LOGIN_TYPE_EMAIL = "email";
+    public static final String LOGIN_TYPE_USER_NAME = "userName";
+    public static final String LOGIN_TYPE_WEIXIN = "weixin";
+    public static final String LOGIN_TYPE_WEIBO = "weibo";
+    public static final String LOGIN_TYPE_QQ = "qq";
+    
 	// 过滤特殊字符
 	public static String StringFilter(String str) throws PatternSyntaxException
 	{

@@ -20,15 +20,16 @@ public class MainTest
 	public static void main(String[] args)
 	{
 		// encodeAndDecodeStringByBase64();
-		encodeStringByMD5();
+//		encodeStringByMD5();
 //		encodeAndDecodeStringByRSA();
+		dateFormat();
 	}
 
 	public static void dateFormat()
 	{
 		// 测试日期格式
 		Date date = new Date();
-		DateFormat dateFormatDate = new SimpleDateFormat("yyyy-MM");
+		DateFormat dateFormatDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String dateS = dateFormatDate.format(date);
 		System.out.println(dateS);
 	}
