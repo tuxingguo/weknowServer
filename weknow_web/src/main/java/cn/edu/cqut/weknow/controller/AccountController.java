@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -19,6 +20,7 @@ import cn.edu.cqut.weknow.service.IUserAuthsService;
 import cn.edu.cqut.weknow.service.IUserService;
 import cn.edu.cqut.weknow.utils.RegExpValidator;
 import cn.edu.cqut.weknow.utils.Utils;
+import cn.edu.cqut.weknow.utils.pages.PagedResult;
 
 @Controller
 @RequestMapping("/account")
@@ -37,17 +39,14 @@ public class AccountController
 		Result result = new Result();
 		try
 		{
-			// 登录名不区分大小写，数据库中存储的全部为大写
-			String loginName = httpServletRequest.getParameter("loginName").trim().toUpperCase();
-			String loginPassword = httpServletRequest.getParameter("loginPassword").trim();
-//			System.out.println("loginName: " + loginName);
-//			System.out.println("loginPassword: " + loginPassword);
-			// 1. 校验用户名和密码
-			if ("".equals(loginName) || "".equals(loginPassword))
+			String loginName = httpServletRequest.getParameter("loginName");
+			String loginPassword = httpServletRequest.getParameter("loginPassword");
+			String errorMsg = validateInputData(loginName, loginPassword);
+			if(!"".equals(errorMsg))
 			{
 				result.setResult(Result.FAIL);
-				result.setErrorMsg("用户名或密码为空！");
-				return result;
+				result.setErrorMsg(errorMsg);
+				return result;				
 			}
 			// 2. 查看用户名是否可用
 			UserAuthsExample userAuthsExample = new UserAuthsExample();
@@ -81,24 +80,81 @@ public class AccountController
 			DateFormat dateFormatDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			users.setRegistertime(dateFormatDate.format(new Date()));
 			users.setRegisterip(httpServletRequest.getRemoteAddr());
+			userService.add(users);
 
 			userAuths.setUserid(users.getId());
 			userAuths.setIdentifier(loginName);
 			userAuths.setCredential(loginPassword);
 			userAuths.setVerified(false);
-			
-			userService.add(users);
 			userAuthService.add(userAuths);
-			
+
 			result.setResult(Result.SUCCESS);
 			return result;
 		}
 		catch (Exception e)
 		{
+			System.out.println(e.getMessage());
 			result.setResult(Result.FAIL);
-			result.setErrorMsg(e.getMessage());
+			result.setErrorMsg("服务器异常，请稍后再试！");
 		}
 		return result;
+	}
+
+	@RequestMapping("/login")
+	@ResponseBody
+	public Result login(HttpServletRequest httpServletRequest) throws Exception
+	{
+		System.out.println("===================AccountController::login()======================");
+		Result result = new Result();
+		try
+		{
+			// 1. 校验输入数据
+			String loginName = httpServletRequest.getParameter("loginName");
+			String loginPassword = httpServletRequest.getParameter("loginPassword");
+			String errorMsg = validateInputData(loginName, loginPassword);
+			if(!"".equals(errorMsg))
+			{
+				result.setResult(Result.FAIL);
+				result.setErrorMsg(errorMsg);
+				return result;				
+			}
+			// 2. 验证登录名和密码是否正确
+			UserAuthsExample userAuthsExample = new UserAuthsExample();
+			userAuthsExample.createCriteria().andIdentifierEqualTo(loginName);
+			userAuthsExample.createCriteria().andCredentialEqualTo(loginPassword);
+			PagedResult<UserAuths> pagedResult = userAuthService.list(userAuthsExample, 1);
+			if (pagedResult.getDataList().size() <= 0)
+			{
+				result.setResult(Result.FAIL);
+				result.setErrorMsg("登录名或密码错误！");
+				return result;
+			}			
+			// 3. 更新最后登录信息
+			UserAuths userAuths = pagedResult.getDataList().get(0);
+			DateFormat dateFormatDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			userAuths.setLogintime(dateFormatDate.format(new Date()));
+			userAuths.setLoginip(httpServletRequest.getRemoteAddr());
+			userAuthService.update(userAuths);
+			// 4. 登录成功
+			result.setResult(Result.SUCCESS);
+			return result;			
+		}
+		catch (Exception e)
+		{
+			System.out.println(e.getMessage());
+			result.setResult(Result.FAIL);
+			result.setErrorMsg("服务器异常，请稍后再试！");
+		}
+		return result;
+	}
+
+	private String validateInputData(String loginName, String loginPassword)
+	{
+		System.out.println("loginName: " + loginName);
+		System.out.println("loginPassword: " + loginPassword);
+		if(StringUtils.isEmpty(loginName)||StringUtils.isEmpty(loginPassword))
+			return "用户名或密码为空！";
+		return "";
 	}
 
 }
