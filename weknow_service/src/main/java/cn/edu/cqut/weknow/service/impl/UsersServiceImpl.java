@@ -135,7 +135,7 @@ public class UsersServiceImpl implements IUserService
 			usersCustomer.setVerified(userAuth.getVerified());
 			usersCustomer.setLoginTime(userAuth.getLogintime());
 			usersCustomer.setLoginIp(userAuth.getLoginip());
-//			usersCustomer.setImei(userAuth.geti());
+			usersCustomer.setImei(userAuth.getLoginimei());
 			return usersCustomer;
 		}
 		catch (Exception e)

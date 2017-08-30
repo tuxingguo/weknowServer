@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.edu.cqut.weknow.customer.po.Result;
+import cn.edu.cqut.weknow.customer.po.UsersCustomer;
 import cn.edu.cqut.weknow.po.UserAuths;
 import cn.edu.cqut.weknow.po.UserAuthsExample;
 import cn.edu.cqut.weknow.po.Users;
@@ -41,6 +42,7 @@ public class AccountController
 		{
 			String loginName = httpServletRequest.getParameter("loginName");
 			String loginPassword = httpServletRequest.getParameter("loginPassword");
+			String loginImei = httpServletRequest.getParameter("loginImei");
 			String errorMsg = validateInputData(loginName, loginPassword);
 			if(!"".equals(errorMsg))
 			{
@@ -86,6 +88,7 @@ public class AccountController
 			userAuths.setIdentifier(loginName);
 			userAuths.setCredential(loginPassword);
 			userAuths.setVerified(false);
+			userAuths.setLoginimei(loginImei);
 			userAuthService.add(userAuths);
 
 			result.setResult(Result.SUCCESS);
@@ -111,6 +114,7 @@ public class AccountController
 			// 1. 校验输入数据
 			String loginName = httpServletRequest.getParameter("loginName");
 			String loginPassword = httpServletRequest.getParameter("loginPassword");
+			String loginImei = httpServletRequest.getParameter("loginImei");
 			String errorMsg = validateInputData(loginName, loginPassword);
 			if(!"".equals(errorMsg))
 			{
@@ -134,6 +138,7 @@ public class AccountController
 			DateFormat dateFormatDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			userAuths.setLogintime(dateFormatDate.format(new Date()));
 			userAuths.setLoginip(httpServletRequest.getRemoteAddr());
+			userAuths.setLoginimei(loginImei);
 			userAuthService.update(userAuths);
 			// 4. 登录成功
 			result.setResult(Result.SUCCESS);
@@ -156,5 +161,28 @@ public class AccountController
 			return "用户名或密码为空！";
 		return "";
 	}
-
+	@RequestMapping("/userInfo")
+	@ResponseBody
+	public UsersCustomer userInfo(HttpServletRequest httpServletRequest) throws Exception
+	{
+		System.out.println("===================AccountController::userInfo()======================");
+		try
+		{
+			//1. 获取登录名
+			String loginName = httpServletRequest.getParameter("loginName");
+			//2. 校验数据
+			if(StringUtils.isEmpty(loginName))
+				return null;
+			//3. 从数据库取出数据
+			UserAuthsExample userAuthsExample = new UserAuthsExample();
+			userAuthsExample.createCriteria().andIdentifierEqualTo(loginName);
+			UsersCustomer usersCustomer = userService.find(userAuthsExample);
+			//4. 返回数据
+			return usersCustomer;
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
+	}
 }
