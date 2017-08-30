@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50624
 File Encoding         : 65001
 
-Date: 2017-08-29 07:13:50
+Date: 2017-08-30 08:31:04
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -3588,7 +3588,7 @@ CREATE TABLE `users` (
   `personalizedSignature` varchar(512) DEFAULT NULL,
   `note` varchar(1024) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of users
@@ -3607,10 +3607,11 @@ CREATE TABLE `user_auths` (
   `verified` bit(1) NOT NULL,
   `loginTime` varchar(30) DEFAULT NULL,
   `loginIp` varchar(30) DEFAULT NULL,
+  `loginImei` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`userId`),
   CONSTRAINT `user_id` FOREIGN KEY (`userId`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user_auths

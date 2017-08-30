@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.cqut.weknow.customer.po.mapper.UsersCustomerMapper" >
+  <insert id="insert" parameterType="cn.edu.cqut.weknow.po.Users" >
+	<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+		select LAST_INSERT_ID()
+	</selectKey>    
+    insert into users (id, email, nick, 
+      userName, phone, avatarUrl, 
+      registerTime, registerIp, personalizedSignature, 
+      note)
+    values (#{id,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, #{nick,jdbcType=VARCHAR}, 
+      #{username,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{avatarurl,jdbcType=VARCHAR}, 
+      #{registertime,jdbcType=VARCHAR}, #{registerip,jdbcType=VARCHAR}, #{personalizedsignature,jdbcType=VARCHAR}, 
+      #{note,jdbcType=VARCHAR})
+  </insert>
+</mapper>
