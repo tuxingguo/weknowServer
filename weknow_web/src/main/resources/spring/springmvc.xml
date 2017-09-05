@@ -23,6 +23,7 @@
     <mvc:resources mapping="/uploads/**" location="/uploads/"/>  
     <mvc:resources mapping="/jpgs/**" location="/jpgs/"/>  
     
+    <!-- 告诉Spring 该到哪里去找标记为@Controller 的Controller 控制器 -->
 	<context:component-scan base-package="cn.edu.cqut.weknow.controller" />
 
 	<mvc:annotation-driven />

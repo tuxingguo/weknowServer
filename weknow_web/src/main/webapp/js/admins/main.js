@@ -3,6 +3,7 @@
  */
 function onAdd() {
 	window.location.href = $('#contextPath').val() + "/admins/add.action";
+	
 }
 
 var deleteId;

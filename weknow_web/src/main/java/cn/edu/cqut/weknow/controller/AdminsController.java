@@ -99,7 +99,6 @@ public class AdminsController
 	@ResponseBody
 	public Result editSubmit(HttpSession session, Admins admins) throws Exception
 	{
-//		System.out.println(admins);
 		Result result = new Result();
 		try
 		{

@@ -10,6 +10,7 @@
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
   
+  <!-- 加载Spring配置文件 -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath*:/spring/applicationContext-*.xml</param-value>
@@ -55,7 +56,8 @@
 		<servlet-name>default</servlet-name>
 		<url-pattern>*.woff</url-pattern>
 	</servlet-mapping>
-
+	
+	<!-- 加载spring mvc -->
 	<servlet>
 		<servlet-name>springmvc</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
