@@ -6,7 +6,6 @@
  * 
  */
 function onAdd() {
-	//alert("kkkkkk");
 	window.location.href = $('#contextPath').val() + "/feedbacks/add.action";
 }
 

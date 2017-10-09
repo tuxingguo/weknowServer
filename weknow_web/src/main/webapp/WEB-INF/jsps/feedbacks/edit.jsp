@@ -4,10 +4,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%
-	SimpleDateFormat formate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-	String value = formate.format(new Date());
-%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- 
  * 涂兴国
@@ -36,7 +33,7 @@
 </head>
 
 <body>
-
+<jsp:useBean id="date" class="java.util.Date" /> 
 <div class="navbar">
 		<%@include file="/jsps/public/head.jsp"%>
 	</div>
@@ -58,8 +55,8 @@
 								<label>用户名(ID)</label> 
 								<input type="text" value="${feedbacks.userid}" name="userid" id="userid" class="input-xlarge" ${(empty feedbacks.userid)?"":"readonly='readonly'" }/> 
 								<label>投诉/建议内容</label> 
-								<input type="text" value="${(empty feedbacks.content)?"":feedbacks.content}" name="content" id="content" class="input-xlarge" }/>
-								<input type="hidden" value="<%=value %>" name="sendtime" id="sendtime" }/>
+								<input type="text" value="${(empty feedbacks.content)?"":feedbacks.content}" name="content" id="content" class="input-xlarge" />
+								<input type="hidden" value="<fmt:formatDate value="${date}" type="both" dateStyle="long" pattern="yyyy-MM-dd HH:mm:ss" />" name="sendtime" id="sendtime"/>
 								<div class="btn-toolbar">
 									<input type="button" value="保存" id="btnSubmit" class="btn btn-primary" />
 								</div>

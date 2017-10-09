@@ -37,7 +37,6 @@ public class UsersServiceImpl implements IUserService
 			else
 			{
 				pageNo = (pageNo == null) ? 1 : pageNo;
-//				pageSize = pageSize == null ? 10 : pageSize;
 				Integer pageSize = 5;
 				PageHelper.startPage(pageNo, pageSize); // startPage是告诉拦截器说我要开始分页了。分页参数是这两个。
 				return BeanUtil.toPagedResult(usersMapper.selectByExample(example));				
